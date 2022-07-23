@@ -1,0 +1,66 @@
+{
+    "results":[
+       {
+          "gender":"male",
+          "name":{
+             "title":"Mr",
+             "first":"Owen",
+             "last":"Howell"
+          },
+          "location":{
+             "street":{
+                "number":946,
+                "name":"Smokey Ln"
+             },
+             "city":"Utica",
+             "state":"Vermont",
+             "country":"United States",
+             "postcode":65069,
+             "coordinates":{
+                "latitude":"87.7828",
+                "longitude":"-174.1966"
+             },
+             "timezone":{
+                "offset":"+4:30",
+                "description":"Kabul"
+             }
+          },
+          "email":"owen.howell@example.com",
+          "login":{
+             "uuid":"b6a1cee9-87d4-4eff-a94d-d7132fd63f2b",
+             "username":"crazysnake843",
+             "password":"mandrake",
+             "salt":"GD2q490N",
+             "md5":"deb3a930870ba8c33cc450d7a8840d97",
+             "sha1":"c1cdae3ab227f7b92cc4d94edf0147efc191a5ad",
+             "sha256":"d9e1550c56f4fb3a587e7b72d9eedf4b6f5e66f96c90bdd608ae1508f5b5c8dd"
+          },
+          "dob":{
+             "date":"1971-11-09T01:25:38.482Z",
+             "age":50
+          },
+          "registered":{
+             "date":"2004-04-13T10:18:54.094Z",
+             "age":18
+          },
+          "phone":"(398) 529-1715",
+          "cell":"(716) 611-1295",
+          "id":{
+             "name":"SSN",
+             "value":"679-91-1115"
+          },
+          "picture":{
+             "large":"https://randomuser.me/api/portraits/men/22.jpg",
+             "medium":"https://randomuser.me/api/portraits/med/men/22.jpg",
+             "thumbnail":"https://randomuser.me/api/portraits/thumb/men/22.jpg"
+          },
+          "nat":"US"
+       }
+    ],
+    "info":{
+       "seed":"9c36f2c5f5625c39",
+       "results":1,
+       "page":1,
+       "version":"1.4"
+    }
+ }
