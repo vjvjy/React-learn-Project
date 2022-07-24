@@ -1,40 +1,22 @@
 import React, { Component } from 'react';  
 import { Register }  from './Register';
-import  UserList from './UserList';
-// import createHistory from 'history/createBrowserHistory';
-// import { createHashHistory } from 'history'  
+import  UserList from './UserList';  
+import { Route, Switch,Router } from 'react-router-dom';
 
-import { Router } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
-
-import createBrowserHistory from 'history/createBrowserHistory';
-
-import createHistory from 'history/createBrowserHistory';
-
-// const history = createBrowserHistory({forceRefresh:true});
-
-
-const history = createHistory(); 
-
-
-
-// const history = createHistory();   
-// const history = createHashHistory();
+import {history} from './history';
 
 class App extends Component { 
-  constructor(props){
-      super(props);
-   }
-
   render() {
     return (
       <Router history={history}>
-          <Route path="/">
+        <Switch>
+          <Route path="/user/:id">
             <Register />
           </Route>
-          <Route path="/userList">
+          <Route path="/userList" exact >
             <UserList />
           </Route>
+          </Switch>
       </Router>
     );
   }  

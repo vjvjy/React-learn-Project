@@ -1,12 +1,14 @@
 import React, {Component} from "react";
 import './App.css';
-import history from './history';
+import {history} from './history';
 
 
 export class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isEdit: false,
+            updateId: 0,
             check:false,
             firstNameCheck: false,
             lastNameCheck: false,
@@ -19,6 +21,11 @@ export class Register extends Component {
                 {name: 'B.Tech', value: 'btech', id: 2},
                 {name: 'B.Sc', value: 'bsc', id: 3},
                 {name: 'Others', value: 'others', id: 4},
+            ],
+            genderOptions: [
+                {name: 'Male', value: 'male', id: 1},
+                {name: 'Female', value: 'female', id: 2},
+                {name: 'Others', value: 'others', id: 3}
             ],
             bloodGroupOptions: [
                 {value: 'A-positive', label: 'apositive'},
@@ -37,45 +44,53 @@ export class Register extends Component {
     }
 
     componentDidMount() {
-        fetch("https://randomuser.me/api/")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    const data = result.results[0];
-                    this.setState({
-                        firstname: true,
-                        items: result.items
-                    });
-                    console.log("result----------------->",result)
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
-    }
+        console.log("alksc--------------------------->", window.location.href);
+        let id = window.location.href.split("/").pop();
+        this.setState({
+            updateId: id
+        })
+        console.log("id--------------------------->", id);
+        const localStorageData = (localStorage.getItem("regFormDatas") && localStorage.getItem("regFormDatas").length > 0) ? localStorage.getItem("regFormDatas") : [];
+         const userList = JSON.parse(localStorageData);
+         console.log("localStorageData userList---------", userList)
+         console.log("localStorageData userList id---------", userList[id])
+
+         const selectedQual = userList[id].qualification;
+         const qual = this.state.qualOptions.map((item)=>{
+            if (selectedQual.includes(item.name)) {
+                return item.name;
+            }
+         }).filter(item => item);
+         console.log("qual",qual);
+        this.setState({ userDetails: {...userList[id]},selectedQual:qual})
+      }
 
     submit = (event) => {
         console.log(this.props,"this.props=======>>>>>");
-        // event.preventDefault();
-        // const { userDetails, formData } = this.state;
-        // const errorData = this.errorHandling();
-        // this.setState({ errors: errorData })
-        // const isSubmit = this.isSubmit(errorData);
-        // if (isSubmit) {
-        //     const formValues = (localStorage.getItem("regFormDatas") && localStorage.getItem("regFormDatas").length > 0) ? localStorage.getItem("regFormDatas") : [];
-        //     const conFormValues = formValues && formValues.length > 0 ? JSON.parse(formValues) : [];
-        //     const exactDatas = conFormValues.length > 0 ? conFormValues : []
-        //     var datas = exactDatas;
-        //     datas.push(userDetails)
-        // }
-        // localStorage.setItem("regFormDatas", JSON.stringify(datas));
-        history.push('/userList');
+        event.preventDefault();
+        const { userDetails, formData, updateId } = this.state;
+        const errorData = this.errorHandling();
+        this.setState({ errors: errorData })
+        const isSubmit = this.isSubmit(errorData);
+        if (isSubmit) {
+            if(updateId !== null) {
+             const localStorageData = (localStorage.getItem("regFormDatas") && localStorage.getItem("regFormDatas").length > 0) ? localStorage.getItem("regFormDatas") : [];
+             const userList = JSON.parse(localStorageData);
+             let deleteData = userList.filter((item, index) => index !== this.state.updateId );
+             console.log("deleteData",deleteData);
+             let updateData = deleteData.splice(this.state.updateId, 0, userDetails);
+             console.log("updateData",updateData);
+             localStorage.setItem("regFormDatas", JSON.stringify(updateData));
+            } else {
+            const formValues = (localStorage.getItem("regFormDatas") && localStorage.getItem("regFormDatas").length > 0) ? localStorage.getItem("regFormDatas") : [];
+            const conFormValues = formValues && formValues.length > 0 ? JSON.parse(formValues) : [];
+            const exactDatas = conFormValues.length > 0 ? conFormValues : []
+            var datas = exactDatas;
+            datas.push(userDetails);
+            localStorage.setItem("regFormDatas", JSON.stringify(datas));
+            }
+            history.push('/userList');
+        }
     }
 
     isSubmit = (errorData) => {
@@ -142,12 +157,18 @@ export class Register extends Component {
     }
 
     render() {
-        const {firstName, lastName, email, age, phone, address, bloodGroup} = this.state.userDetails;
-        const {selectedQual, qualOptions, bloodGroupOptions, errors} = this.state;
+        const {firstName, lastName, email, age, phone, address, bloodGroup, maritalStatus, gender} = this.state.userDetails;
+        const {selectedQual, qualOptions, bloodGroupOptions, errors, genderOptions} = this.state;
+        console.log("selectedQual",selectedQual);
         const qualificationOptions = qualOptions.map((item, index) => {
             let selectBoolean = selectedQual.includes(item.name)
             return (<><input type="checkbox" name="qualification" value={item.name} checked={selectBoolean} key={index}
             onChange={this.setValue} />{item.name}</>)
+        });
+        const genderSelected = genderOptions.map((item, index) => {
+            let selectBoolean = item.value === gender ? true : false;
+            console.log("selectBoolean----->" , selectBoolean, gender, item.name)
+            return (<><input type="radio" value={item.value} name="gender" onChange={this.setValue} checked={selectBoolean}/>{item.name}</>)
         });
         return (
             <div className="registerForm">
@@ -206,15 +227,13 @@ export class Register extends Component {
                         </div>
                         <div>
                             <label className="label">Gender:</label>
-                            <input type="radio" value="male" name="gender" onChange={this.setValue} /> Male
-                            <input type="radio" value="female" name="gender" onChange={this.setValue} /> Female
-                            <input type="radio" value="other" name="gender" onChange={this.setValue} /> Other<br />
+                            {genderSelected}<br />
                             <label className="label"></label>
                             {<span className="error">{errors["gender"]}</span>}
                         </div>
                         <div>
                             <label className="label">Marital Status: </label>
-                            <select name="maritalStatus" onChange={this.setValue}>
+                            <select name="maritalStatus" value={maritalStatus} onChange={this.setValue}>
                                 <option value="selected" selected disabled>-Select-</option>
                                 <option value="married">Married</option>
                                 <option value="single">Single</option>

@@ -71,13 +71,28 @@ label {
 input {
   padding: 5px 10px;
 }
-/* 
-.inputFields {
-  padding: 5px 10px;
-  margin: 10px;
-} */
 
 .error {
   font-size: 10px;
   color: red;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.edit {
+  background-color: black !important;
+  width: 30px;
+  color: white;
+  border: 1px solid white;
+  cursor:pointer;
 }
