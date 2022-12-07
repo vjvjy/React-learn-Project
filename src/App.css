@@ -62,6 +62,7 @@
 }
 div {
   margin-bottom: 10px;
+  text-align: center;
 }
 label {
   display: inline-block;
@@ -96,3 +97,78 @@ td, th {
   border: 1px solid white;
   cursor:pointer;
 }
+
+/* ----------------------------------box cricket------------------------------------------ */
+
+.outer-container {
+  position: relative;
+  background-color: #000;
+}
+
+.inner-container {
+  background-color: #e8e8e8;
+  width: 400px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  margin: 50px 0 0 -50px;
+}
+
+.score-list {
+  padding: 25px;
+  height: 40px;
+}
+
+.button-box {
+  width:95px;
+  height: 25px;
+  color: grey;
+}
+
+/* ----------------------------------quiz------------------------------------------ */
+.quesIdContainer {
+  display: flex;
+  flex-wrap: wrap;
+  /* width: 250px; */
+  border: 1px solid black;
+}
+.quesId {
+  display: inline;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  line-height: 25px;
+  background-color: orange;
+  list-style-type: none;
+  color: black;
+}
+
+.displayArea {
+    width: 330px;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}
+
+.quesContainer {
+  position: relative;
+  height: 600px;
+  width: 60%;
+}
+.outContainer {
+  border: 3px solid #fff;
+    padding: 20px;
+}
+
+.ques {
+  text-align: center;  
+  vertical-align: middle;
+  display: table-cell; 
+  position: absolute;
+  top: 35%;
+  left: 25%;
+}
+

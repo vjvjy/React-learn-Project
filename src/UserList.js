@@ -13,7 +13,8 @@ class UserList extends Component {
     componentDidMount() {
         const localStorageData = (localStorage.getItem("regFormDatas") && localStorage.getItem("regFormDatas").length > 0) ? localStorage.getItem("regFormDatas") : [];
         console.log("localStorageData list---------", localStorageData)
-         const userList = JSON.parse(localStorageData);
+        //  const userList = JSON.parse(localStorageData);
+         const userList = localStorageData && localStorageData.length > 0 ? JSON.parse(localStorageData) : "";
         
          const tHeader = Object.keys(userList[0]); 
          tHeader.unshift("S.No");

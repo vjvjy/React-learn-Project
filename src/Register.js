@@ -51,11 +51,12 @@ export class Register extends Component {
         })
         console.log("id--------------------------->", id);
         const localStorageData = (localStorage.getItem("regFormDatas") && localStorage.getItem("regFormDatas").length > 0) ? localStorage.getItem("regFormDatas") : [];
-         const userList = JSON.parse(localStorageData);
+         const userList = localStorageData && localStorageData.length > 0 ? JSON.parse(localStorageData) : "";
          console.log("localStorageData userList---------", userList)
          console.log("localStorageData userList id---------", userList[id])
-
+        if(userList && userList.length > 0) {
          const selectedQual = userList[id].qualification;
+        
          const qual = this.state.qualOptions.map((item)=>{
             if (selectedQual.includes(item.name)) {
                 return item.name;
@@ -63,6 +64,7 @@ export class Register extends Component {
          }).filter(item => item);
          console.log("qual",qual);
         this.setState({ userDetails: {...userList[id]},selectedQual:qual})
+        }
       }
 
     submit = (event) => {
@@ -173,6 +175,7 @@ export class Register extends Component {
         return (
             <div className="registerForm">
                 <div className="tags">
+                <React.StrictMode>
                     <form>
                         <div>
                         <label className="label">First Name:</label>
@@ -254,6 +257,7 @@ export class Register extends Component {
                         </div>
                         <button type="button" onClick={this.submit}>Submit</button>
                     </form>
+                </React.StrictMode>
                 </div>
             </div>
         );
